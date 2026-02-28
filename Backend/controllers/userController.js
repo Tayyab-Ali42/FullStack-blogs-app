@@ -43,24 +43,26 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" })
         }
 
-        const existUser = await User.findOne({ email })
+        const user = await User.findOne({ email })
 
-        if (!existUser) {
+        if (!user) {
             return res.status(401).json({ message: "Invalid credentials" })
         }
 
-        const isPasswordMatch = await bcrypt.compare(password, existUser.password)
+        const isPasswordMatch = await bcrypt.compare(password, user.password)
 
         if (!isPasswordMatch) {
             return res.status(401).json({ message: "Invalid credentials" })
         }
 
-        const token = generateToken(existUser._id, existUser.email)
+        const token = generateToken(user._id)
 
 
         return res.status(200).json({
-            message: "User successfully loggedIn",
-            token: token
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            token
         })
 
 
