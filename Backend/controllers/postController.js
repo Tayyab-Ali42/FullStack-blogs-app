@@ -62,9 +62,11 @@ export const getSinglePost = async (req, res) => {
             title: post.title,
             content: post.content,
             image: post.image,
+            comments: post.comments,
             author: post.author,
             likes: post.likes,
-            createdAt: post.createdAt
+            createdAt: post.createdAt,
+
         })
 
     } catch (error) {
