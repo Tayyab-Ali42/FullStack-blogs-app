@@ -27,13 +27,13 @@ const postSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    comments: [
-        {
-            user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-            content: { type: String, required: true },
-            createdAt: { type: Date, default: Date.now }
-        }
-    ]
+    // comments: [
+    //     {
+    //         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    //         content: { type: String, required: true },
+    //         createdAt: { type: Date, default: Date.now }
+    //     }
+    // ]
 },
     { timestamps: true }
 )
