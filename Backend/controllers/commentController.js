@@ -11,7 +11,7 @@ export const addComment = async (req, res) => {
 
 
 
-        const CommentedPost = await Post.findById(postId);
+        const CommentedPost = await Post.findById(postId)
 
 
         if (!CommentedPost) {
@@ -39,5 +39,29 @@ export const addComment = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Server error" })
+    }
+}
+
+export const getComments = async (req, res) => {
+    try {
+        const postId = req.params.postId
+        const { page, limit } = req.query
+        const skip = (page - 1) * limit
+
+
+        // validate post
+        const post = await Post.findById(postId)
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        const comments = await Comment.find({ post: postId }).sort({ createdAt: - 1 }).skip(skip).limit(limit).populate("user", "name email");
+        res.json({
+            comments
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Server error", error })
     }
 }
